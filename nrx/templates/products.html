@@ -39,18 +39,29 @@
             <ul class="nav-list" id="nav-list">
                 <ul class="nav-list" id="nav-list"> 
                     <li><a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
-                    <li><a href="{% url 'products' %}" class="{% if request.path == '/products/' %}active{% endif %}">Products</a></li>
+                    <li><a href="{% url 'product_list' %}" class="{% if request.path == '/products/' %}active{% endif %}">Products</a></li>
                     <li><a href="{% url 'services' %}" class="{% if request.path == '/services/' %}active{% endif %}">Services</a></li>
                     <li><a href="{% url 'properties' %}" class="{% if request.path == '/properties/' %}active{% endif %}">Properties for Sale</a></li>
                     <li><a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a></li>
                     <li><a href="{% url 'signin' %}" class="{% if request.path == '/signin/' %}active{% endif %}">Sign In</a></li>
                 </ul>
-                
-                
-        </nav>
+                             
+      </nav>
     </header>
     
- <!-- to iclude contacts -->
+    <h1>Available Products</h1>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% for product in products %}
+            <div style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; width: 200px; text-align: center;">
+                <h3 style="font-size: 1.5em;">{{ product.name }}</h3>
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; height: auto; border-radius: 5px;">
+                <p style="color: #555;">{{ product.description }}</p>
+                <p style="font-weight: bold;">${{ product.price }}</p>
+            </div>
+        {% empty %}
+            <p>No products available.</p>
+        {% endfor %}
+    </div>
 
 
  <section style="position: relative; height: 100vh; overflow: hidden;">

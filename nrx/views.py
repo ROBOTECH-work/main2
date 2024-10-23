@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from .models import Product
 
 
 def home(request):
     return render(request, 'home.html')
 
-def products(request):
-    return render(request, 'products.html')
+def product_list(request):
+    products = Product.objects.all()
+    return render(request, 'products.html', {'products': products})
 
 def services(request):
     return render(request, 'services.html')
@@ -36,3 +38,8 @@ def signin(request):
 @login_required(login_url='signin')
 def main(request):
     return render(request, 'main.html')
+
+def product_detail(request, id):
+    product = Product.objects.get(id=id)  # Fetch the product by ID
+    return render(request, 'product_detail.html', {'product': product})  # Render detail template
+
